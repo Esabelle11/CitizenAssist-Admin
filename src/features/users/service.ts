@@ -14,18 +14,42 @@ export async function get(): Promise<AdminUser[]> {
     full_name: user.full_name,
     email: user.email,
     role: user.role?.name ?? "-",
+    role_id: user.role?.id ?? "-",
     is_active: user.is_active,
     last_login: user.last_login,
     created_at: user.created_at,
+    employee_id: user.employee_id,
+    department: user.department,
+    phone: user.phone,
   }));
 
   return users;
 }
 
 
+export async function getRoles(){
+
+  const response = await fetch(
+      "/api/roles"
+  );
+
+
+  if(!response.ok){
+      throw new Error(
+          "Failed to load roles"
+      );
+  }
+
+  console.log("response:",response)
+
+
+  return response.json();
+
+}
+
 export async function create(data: Partial<AdminUser>) {
   const response = await fetch(
-    "/api/agency-routing",
+    "/api/users",
     {
       method: "POST",
       headers: { "Content-Type": "application/json",},
@@ -42,7 +66,7 @@ export async function create(data: Partial<AdminUser>) {
 
 
 export async function getById(id:string){   
-  const response =await fetch(`/api/agency-routing/${id}`);
+  const response =await fetch(`/api/users/${id}`);
     
   if(!response.ok){
     throw new Error("Failed loading rule");
@@ -59,7 +83,7 @@ export async function update_row(
 ){
    
     const response = await fetch(
-      `/api/agency-routing/${id}`,
+      `/api/users/${id}`,
       {
         method:"PUT",
         headers:{"Content-Type":"application/json"},
@@ -77,7 +101,7 @@ export async function update_row(
 export async function remove_row(id:string){
    
     const response = await fetch(
-      `/api/agency-routing/${id}`,
+      `/api/users/${id}`,
       {method:"DELETE"}
     );
       

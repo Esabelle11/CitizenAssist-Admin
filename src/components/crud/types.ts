@@ -20,7 +20,11 @@ export interface ColumnConfig<T = any> {
 
 export interface FormFieldConfig {
   name:string;
-  label:string;
+  // label:string;
+  label:
+    | string
+    | ((mode: "create" | "edit" | "view") => string);
+
   type:
     | "text"
     | "email"

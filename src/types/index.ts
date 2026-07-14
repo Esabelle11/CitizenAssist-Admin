@@ -82,9 +82,14 @@ export interface AdminUser {
   email: string;
   full_name: string;
   role: string;
+  role_id: number;
   is_active: boolean;
   last_login?: string;
   created_at: string;
+  employee_id: string;
+  department: string;
+  phone: string;
+
 }
 
 export interface AIConfig {

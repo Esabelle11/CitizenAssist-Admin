@@ -55,11 +55,15 @@ export const userFields: FormFieldConfig[] = [
   
   {
       name:"password",
-      label:"Password",
+      label:(mode)=> 
+      mode === "edit"
+        ? "New Password"
+        : "Password",
       type:"password",
       dataType:"password",
       required:true,
-      hideInEdit:true
+      hideInEdit:false,
+      hideInView:true
   },
   
   {
@@ -87,7 +91,7 @@ export const userFields: FormFieldConfig[] = [
       name:"role_id",
       label:"Role",
       type:"select",
-      dataType:"text",
+      dataType:"number",
       options:[]
   },
  

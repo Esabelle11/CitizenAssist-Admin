@@ -17,9 +17,6 @@ interface Props {
 }
 
 
-
-
-
 export function CrudForm({
   fields,
   data,
@@ -88,7 +85,11 @@ export function CrudForm({
         .map(field=>(
           <div key={field.name} className="space-y-1">
             <label className="text-sm font-medium">
-              {field.label}
+            {
+              typeof field.label === "function"
+                ? field.label(mode)
+                : field.label
+            }
             </label>
 
             {field.type==="textarea"&&
@@ -105,7 +106,7 @@ export function CrudForm({
               />
             }
 
-            {field.type==="text"|| field.type === "email" ||field.type === "password" &&
+            {(field.type==="text"|| field.type === "email" ||field.type === "password") &&
               <input
                 type={field.type}
                 className="border rounded p-2 w-full"
@@ -179,7 +180,11 @@ export function CrudForm({
                   }
                 />
                 <span>
-                  {field.label}
+                {
+                  typeof field.label === "function"
+                    ? field.label(mode)
+                    : field.label
+                }
                 </span>
               </div>
             }
