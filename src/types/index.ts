@@ -1,6 +1,6 @@
 export type UrgencyLevel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
 export type DispatchChannel = "API_WEBHOOK" | "EMAIL" | "INTERNAL";
-export type UserRole = "Admin" | "Operator" | "Viewer";
+// export type UserRole = "Admin" | "Operator" | "Viewer";
 export type MessageRole = "user" | "assistant" | "system";
 export type DispatchStatus = "QUEUED" | "SENT" | "DELIVERED" | "FAILED" | "RETRYING";
 export type IncidentStatus = "PENDING_GPS" | "PENDING" | "DISPATCHED" | "RESOLVED" | "CLOSED";
@@ -81,7 +81,7 @@ export interface AdminUser {
   id: string;
   email: string;
   full_name: string;
-  role: UserRole;
+  role: string;
   is_active: boolean;
   last_login?: string;
   created_at: string;

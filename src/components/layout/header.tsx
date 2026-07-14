@@ -3,6 +3,8 @@
 import { Globe } from "lucide-react";
 import { useI18n } from "@/lib/i18n/context";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 export function Header() {
   const { lang, setLang } = useI18n();
@@ -10,6 +12,17 @@ export function Header() {
   const toggleLang = () => {
     setLang(lang === "en" ? "ms" : "en");
   };
+
+  const router = useRouter();
+  async function logout() {
+    const supabase = createClient();
+
+    await supabase.auth.signOut();
+
+    router.push("/login");
+
+    router.refresh();
+  }
 
   return (
     <header className="flex h-14 items-center justify-between border-b border-gray-200 bg-white px-6 dark:border-gray-800 dark:bg-gray-950">
@@ -19,9 +32,12 @@ export function Header() {
           <Globe className="h-4 w-4" />
           {lang === "en" ? "Bahasa Melayu" : "English"}
         </Button>
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
+        {/* <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
           AR
-        </div>
+        </div> */}
+        <Button onClick={logout}>
+          Logout
+        </Button>
       </div>
     </header>
   );
