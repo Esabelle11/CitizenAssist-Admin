@@ -22,7 +22,7 @@ export interface AgencyRouting {
   updated_at: string;
 }
 
-export interface KnowledgeEntry {
+export interface InformationBase {
   id: number;
   category: string;
   name: string;
@@ -34,7 +34,7 @@ export interface KnowledgeEntry {
 }
 
 export interface TrackedIncident {
-  incident_id: string;
+  id: string;
   chat_id: string;
   category: string;
   urgency_level: UrgencyLevel;
@@ -66,7 +66,7 @@ export interface ChatSession {
 }
 
 export interface IncidentDispatch {
-  dispatch_id: string;
+  id: string;
   incident_id: string;
   target_agency: string;
   channel_used: string;
