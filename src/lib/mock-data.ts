@@ -194,71 +194,7 @@ export const incidents: TrackedIncident[] = [
   },
 ];
 
-export const chatSessions: ChatSession[] = [
-  {
-    chat_id: "chat-001",
-    user_identifier: "user-abc123",
-    status: "closed",
-    message_count: 8,
-    last_message_at: "2026-07-09T08:45:00Z",
-    created_at: "2026-07-09T08:30:00Z",
-  },
-  {
-    chat_id: "chat-002",
-    user_identifier: "user-def456",
-    status: "active",
-    message_count: 5,
-    last_message_at: "2026-07-09T09:20:00Z",
-    created_at: "2026-07-09T09:15:00Z",
-  },
-  {
-    chat_id: "chat-003",
-    user_identifier: "user-ghi789",
-    status: "closed",
-    message_count: 12,
-    last_message_at: "2026-07-09T07:10:00Z",
-    created_at: "2026-07-09T07:00:00Z",
-  },
-];
 
-export const chatMessages: ChatMessage[] = [
-  {
-    message_id: "msg-001",
-    chat_id: "chat-001",
-    role: "user",
-    content: "There's a broken street light on my road, it's very dark at night",
-    media_type: "text",
-    metadata: {},
-    created_at: "2026-07-09T08:30:00Z",
-  },
-  {
-    message_id: "msg-002",
-    chat_id: "chat-001",
-    role: "assistant",
-    content: "I understand you're reporting a broken street light. Could you share your GPS location so we can dispatch this to your local council?",
-    media_type: "text",
-    metadata: { classification: { category: "INFRASTRUCTURE", confidence: 0.92 } },
-    created_at: "2026-07-09T08:31:00Z",
-  },
-  {
-    message_id: "msg-003",
-    chat_id: "chat-001",
-    role: "user",
-    content: "Location: Jalan SS2/24, Petaling Jaya",
-    media_type: "text",
-    metadata: { gps: { lat: 3.1073, lng: 101.6085 } },
-    created_at: "2026-07-09T08:35:00Z",
-  },
-  {
-    message_id: "msg-004",
-    chat_id: "chat-001",
-    role: "assistant",
-    content: "Thank you. I've forwarded your report to MBPJ (Local Council). Reference: INC-001. Expected response within 48 hours.",
-    media_type: "text",
-    metadata: { id: "disp-001" },
-    created_at: "2026-07-09T08:36:00Z",
-  },
-];
 
 export const dispatches: IncidentDispatch[] = [
   {
