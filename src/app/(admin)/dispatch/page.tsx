@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <CrudPage
       title="Dispatch Management"
+      subtitle="Manage communication with agencies"
       data={crud.rules}
       columns={incidentDispatchColumns}
       fields={incidentDispatchFields}

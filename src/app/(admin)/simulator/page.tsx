@@ -1,128 +1,161 @@
 "use client";
 
 import { useState } from "react";
-import { FlaskConical, ArrowRight } from "lucide-react";
+import {RefreshCcw} from "lucide-react";
 import { PageHeader } from "@/components/layout/header";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label, Textarea } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/lib/i18n/context";
-import { agencyRoutings } from "@/lib/mock-data";
-import { urgencyColor } from "@/lib/utils";
-import type { SimulatorResult } from "@/types";
+import {Button} from "@/components/ui/button";
 
-function simulateRouting(input: string): SimulatorResult | null {
-  const lower = input.toLowerCase();
-  if (!lower.trim()) return null;
+import {SimulatorChat} from "@/components/simulator/SimulatorChat";
+import { IntentCard } from "@/components/simulator/IntentCard";
+import { RoutingCard } from "@/components/simulator/RoutingCard";
+import { RagCard } from "@/components/simulator/RagCard";
+import { ResponseCard } from "@/components/simulator/ResponseCard";
+import { JsonViewer } from "@/components/simulator/JsonViewer";
 
-  let bestMatch = agencyRoutings[0];
-  let matchedKeywords: string[] = [];
+import type {
+  SimulatorMessage,
+  SimulationResult,
+} from "@/types/simulator";
 
-  for (const rule of agencyRoutings) {
-    const matches = rule.keywords.filter((kw) => lower.includes(kw.toLowerCase()));
-    if (matches.length > matchedKeywords.length) {
-      matchedKeywords = matches;
-      bestMatch = rule;
+
+export default function SimulatorPage(){
+  const [messages,setMessages] = useState<SimulatorMessage[]>([]);
+  const [selectedResult,setSelectedResult] = useState<SimulationResult|null>(null);
+  const [loading,setLoading] = useState(false);
+
+  const handleSimulation = async (
+    formData: FormData
+  ) => {
+    try {
+
+      setLoading(true);
+
+      const userText =  formData.get("message") as string;
+      const userMessage: SimulatorMessage = {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: userText,
+        timestamp: new Date()
+      };
+
+      // Add user message
+      setMessages(prev => [ ...prev,  userMessage ]);
+
+
+      // Add temporary bot loading message
+      const loadingMessageId =  crypto.randomUUID();
+
+      const loadingMessage: SimulatorMessage = {
+        id: loadingMessageId,
+        role:"assistant",
+        content:"",
+        timestamp:new Date(),
+        isLoading:true
+      };
+
+      setMessages(prev => [  ...prev, loadingMessage ]);
+      const previousMessages =  messages.map(msg=>({ role:msg.role, content:msg.content }));
+      formData.append( "previousMessages", JSON.stringify(previousMessages) );
+
+      console.log("formData: ",formData)
+
+      const res = await fetch(
+        "/api/simulator",
+        {
+          method:"POST",
+          body:formData
+        }
+      );
+
+      const data =  await res.json();
+      console.log("res_data: ",data)
+
+      const assistantMessage: SimulatorMessage = {
+        id:loadingMessageId,
+        role:"assistant",
+        content:data.response,
+        timestamp:new Date(),
+        result:data,
+        isLoading:false
+      };
+
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === loadingMessageId
+          ? assistantMessage
+          : msg
+        )
+      );
+
+      setSelectedResult(data);
+
+
     }
-  }
+    catch(error){
+      console.error(error);
+    }
+    finally{
+      setLoading(false);
+    }
 
-  const confidence = matchedKeywords.length > 0 ? Math.min(0.6 + matchedKeywords.length * 0.15, 0.98) : 0.3;
-
-  return {
-    category: bestMatch.category_code.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()) + " Issue",
-    agency: bestMatch.agency_name,
-    urgency: bestMatch.default_urgency,
-    confidence,
-    matched_keywords: matchedKeywords,
   };
-}
 
-export default function SimulatorPage() {
-  const { t } = useI18n();
-  const sim = t.simulator;
-  const [input, setInput] = useState('My street has a broken street light');
-  const [result, setResult] = useState<SimulatorResult | null>(null);
 
-  const handleRun = () => {
-    setResult(simulateRouting(input));
+  const resetChat=()=>{
+    setMessages([]);
+    setSelectedResult(null);
   };
 
   return (
     <>
-      <PageHeader title={sim.title} subtitle={sim.subtitle} />
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">{sim.input}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label htmlFor="sim-input">Citizen Report</Label>
-              <Textarea
-                id="sim-input"
-                className="mt-2 min-h-[120px]"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={sim.placeholder}
-              />
-            </div>
-            <Button onClick={handleRun}>
-              <FlaskConical className="h-4 w-4" />
-              {sim.runSimulation}
-            </Button>
-          </CardContent>
-        </Card>
+      <PageHeader title="AI Simulator"  subtitle="Test CitizenAssist AI conversation workflow"/>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base">
-              {sim.output}
-              {result && <ArrowRight className="h-4 w-4 text-gray-400" />}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {result ? (
-              <dl className="space-y-4">
-                <div className="flex justify-between border-b border-gray-100 pb-3 dark:border-gray-800">
-                  <dt className="text-sm text-gray-500">{sim.category}</dt>
-                  <dd className="font-medium">{result.category}</dd>
-                </div>
-                <div className="flex justify-between border-b border-gray-100 pb-3 dark:border-gray-800">
-                  <dt className="text-sm text-gray-500">{sim.agency}</dt>
-                  <dd className="font-medium">{result.agency}</dd>
-                </div>
-                <div className="flex justify-between border-b border-gray-100 pb-3 dark:border-gray-800">
-                  <dt className="text-sm text-gray-500">{sim.urgency}</dt>
-                  <dd>
-                    <Badge className={urgencyColor(result.urgency)}>{result.urgency}</Badge>
-                  </dd>
-                </div>
-                <div className="flex justify-between border-b border-gray-100 pb-3 dark:border-gray-800">
-                  <dt className="text-sm text-gray-500">{sim.confidence}</dt>
-                  <dd className="font-medium">{(result.confidence * 100).toFixed(0)}%</dd>
-                </div>
-                <div>
-                  <dt className="mb-2 text-sm text-gray-500">{sim.matchedKeywords}</dt>
-                  <dd className="flex flex-wrap gap-1">
-                    {result.matched_keywords.length > 0 ? (
-                      result.matched_keywords.map((kw) => (
-                        <Badge key={kw} className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                          {kw}
-                        </Badge>
-                      ))
-                    ) : (
-                      <span className="text-sm text-gray-400">No keywords matched</span>
-                    )}
-                  </dd>
-                </div>
-              </dl>
-            ) : (
-              <p className="text-sm text-gray-400">Run a simulation to see routing results</p>
-            )}
-          </CardContent>
-        </Card>
+      {/* <div className="flex justify-end mb-4">
+        <Button  variant="outline" onClick={resetChat} >
+          <RefreshCcw  className="mr-2 h-4 w-4"/>
+          Reset Simulation
+        </Button>
+      </div> */}
+
+      <div className="grid lg:grid-cols-5 gap-6">
+     
+
+        {/* CHAT */}
+        <div className="lg:col-span-2">
+          <div className="flex justify-end mb-4">
+            <Button  variant="outline" onClick={resetChat} >
+              <RefreshCcw  className="mr-2 h-4 w-4"/>
+              Reset Simulation
+            </Button>
+          </div>
+          <SimulatorChat
+            messages={messages}
+            loading={loading}
+            onSubmit={handleSimulation}
+            onSelectMessage={(message)=>{
+              if(message.result){
+                setSelectedResult( message.result );
+              }
+            }}
+          />
+        </div>
+
+
+        {/* ANALYSIS */}
+        <div className="space-y-4">
+          {  selectedResult &&
+            <>
+              <IntentCard analysis={ selectedResult.analysis} />
+              <RoutingCard routing={selectedResult.routing } />
+              {/* <RagCard documents={selectedResult.rag}/> */}
+              <ResponseCard response={ selectedResult.response }/>
+              <JsonViewer data={ selectedResult }/>
+            </>
+          }
+        </div>
+
       </div>
     </>
-  );
+  )
 }

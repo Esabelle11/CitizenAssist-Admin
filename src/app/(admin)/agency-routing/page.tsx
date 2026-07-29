@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <CrudPage
       title="Agency Routing"
+      subtitle="Manage routing rules for citizen reports"
       data={crud.rules}
       columns={agencyRoutingColumns}
       fields={agencyRoutingFields}

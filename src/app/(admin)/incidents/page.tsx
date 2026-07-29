@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <CrudPage
       title="Incident Tracking"
+      subtitle="Track and manage citizen-reported cases"
       data={crud.rules}
       columns={trackedIncidentColumns}
       fields={trackedIncidentFields}

@@ -1,6 +1,6 @@
 import type {
   AgencyRouting,
-  KnowledgeEntry,
+  InformationBase,
   TrackedIncident,
   ChatSession,
   ChatMessage,
@@ -114,7 +114,7 @@ export const agencyRoutings: AgencyRouting[] = [
   },
 ];
 
-export const knowledgeEntries: KnowledgeEntry[] = [
+export const knowledgeEntries: InformationBase[] = [
   {
     id: 1,
     category: "Emergency",
@@ -149,7 +149,7 @@ export const knowledgeEntries: KnowledgeEntry[] = [
 
 export const incidents: TrackedIncident[] = [
   {
-    incident_id: "inc-001",
+    id: "inc-001",
     chat_id: "chat-001",
     category: "INFRASTRUCTURE",
     urgency_level: "MEDIUM",
@@ -161,7 +161,7 @@ export const incidents: TrackedIncident[] = [
     updated_at: "2026-07-09T09:00:00Z",
   },
   {
-    incident_id: "inc-002",
+    id: "inc-002",
     chat_id: "chat-002",
     category: "FLOOD",
     urgency_level: "HIGH",
@@ -171,7 +171,7 @@ export const incidents: TrackedIncident[] = [
     updated_at: "2026-07-09T09:15:00Z",
   },
   {
-    incident_id: "inc-003",
+    id: "inc-003",
     chat_id: "chat-003",
     category: "FIRE",
     urgency_level: "CRITICAL",
@@ -183,7 +183,7 @@ export const incidents: TrackedIncident[] = [
     updated_at: "2026-07-09T07:05:00Z",
   },
   {
-    incident_id: "inc-004",
+    id: "inc-004",
     chat_id: "chat-004",
     category: "HEALTH",
     urgency_level: "LOW",
@@ -255,14 +255,14 @@ export const chatMessages: ChatMessage[] = [
     role: "assistant",
     content: "Thank you. I've forwarded your report to MBPJ (Local Council). Reference: INC-001. Expected response within 48 hours.",
     media_type: "text",
-    metadata: { dispatch_id: "disp-001" },
+    metadata: { id: "disp-001" },
     created_at: "2026-07-09T08:36:00Z",
   },
 ];
 
 export const dispatches: IncidentDispatch[] = [
   {
-    dispatch_id: "disp-001",
+    id: "disp-001",
     incident_id: "inc-001",
     target_agency: "Local Council (MBPJ)",
     channel_used: "API_WEBHOOK",
@@ -273,7 +273,7 @@ export const dispatches: IncidentDispatch[] = [
     created_at: "2026-07-09T08:36:00Z",
   },
   {
-    dispatch_id: "disp-002",
+    id: "disp-002",
     incident_id: "inc-003",
     target_agency: "Bomba (Fire Dept)",
     channel_used: "EMAIL",
@@ -284,7 +284,7 @@ export const dispatches: IncidentDispatch[] = [
     created_at: "2026-07-09T07:05:00Z",
   },
   {
-    dispatch_id: "disp-003",
+    id: "disp-003",
     incident_id: "inc-002",
     target_agency: "JPBD (Drainage Dept)",
     channel_used: "API_WEBHOOK",
@@ -295,35 +295,7 @@ export const dispatches: IncidentDispatch[] = [
   },
 ];
 
-export const adminUsers: AdminUser[] = [
-  {
-    id: "usr-001",
-    email: "admin@citizenassist.gov.my",
-    full_name: "Ahmad Razak",
-    role: "Admin",
-    is_active: true,
-    last_login: "2026-07-09T08:00:00Z",
-    created_at: "2026-01-01T00:00:00Z",
-  },
-  {
-    id: "usr-002",
-    email: "operator@citizenassist.gov.my",
-    full_name: "Siti Nurhaliza",
-    role: "Operator",
-    is_active: true,
-    last_login: "2026-07-08T17:30:00Z",
-    created_at: "2026-01-15T00:00:00Z",
-  },
-  {
-    id: "usr-003",
-    email: "viewer@citizenassist.gov.my",
-    full_name: "Raj Kumar",
-    role: "Viewer",
-    is_active: true,
-    last_login: "2026-07-07T10:00:00Z",
-    created_at: "2026-02-01T00:00:00Z",
-  },
-];
+
 
 export const aiConfig: AIConfig = {
   system_prompt:

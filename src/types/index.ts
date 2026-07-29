@@ -47,7 +47,7 @@ export interface TrackedIncident {
 }
 
 export interface ChatMessage {
-  message_id: string;
+  id: string;
   chat_id: string;
   role: MessageRole;
   content: string;
@@ -57,12 +57,12 @@ export interface ChatMessage {
 }
 
 export interface ChatSession {
-  chat_id: string;
-  user_identifier: string;
-  status: "active" | "closed";
+  id: string;
+  user_display_name: string;
+  is_escalated: boolean;
   message_count: number;
-  last_message_at: string;
   created_at: string;
+  updated_at: string;
 }
 
 export interface IncidentDispatch {
