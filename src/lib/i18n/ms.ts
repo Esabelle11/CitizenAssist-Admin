@@ -94,6 +94,12 @@ const ms = {
       fullName: "Nama Penuh",
       role: "Peranan",
       lastLogin: "Log Masuk Terakhir",
+      joinedDate: "Tarikh Menyertai",
+      password: "Kata Laluan",
+      newPassword: "Kata Laluan Baharu",
+      department: "Jabatan",
+      employeeId: "ID Pekerja",
+      phone: "Nombor Telefon",
       roles: { Admin: "Pentadbir", Operator: "Operator", Viewer: "Pelihat" },
     },
     aiConfig: {

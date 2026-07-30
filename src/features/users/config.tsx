@@ -1,108 +1,117 @@
-
-import {ColumnConfig,FormFieldConfig}from "@/components/crud/types";   
-import {AdminUser}from "@/types";
+import { ColumnConfig, FormFieldConfig } from "@/components/crud/types";
+import { AdminUser } from "@/types";
 import { formatDate } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n/context";
 
-export const userColumns: ColumnConfig<AdminUser>[] = [
-  {
-    accessorKey: "full_name",
-    header: "Full Name",
-  },
-  {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "role",
-    header: "Role",
-  },
-  {
-    accessorKey: "last_login",
-    header: "Last Login",
-    render(value) {
-      return value ? formatDate(value) : "-";
+/**
+ * Columns
+ */
+export function getUserColumns(
+  t: ReturnType<typeof useI18n>["t"]
+): ColumnConfig<AdminUser>[] {
+  const d = t.users;
+
+  return [
+    {
+      accessorKey: "full_name",
+      header: d.fullName,
     },
-  },
-  {
-    accessorKey: "created_at",
-    header: "Joined Date",
-    render(value) {
-      return value ? formatDate(value) : "-";
+    {
+      accessorKey: "email",
+      header: d.email,
     },
-  },
-];
+    {
+      accessorKey: "role",
+      header: d.role,
+    },
+    {
+      accessorKey: "last_login",
+      header: d.lastLogin,
+      render(value) {
+        return value ? formatDate(value) : "-";
+      },
+    },
+    {
+      accessorKey: "created_at",
+      header: d.joinedDate,
+      render(value) {
+        return value ? formatDate(value) : "-";
+      },
+    },
+  ];
+}
 
+/**
+ * Form Fields
+ */
+export function getUserFields(
+  t: ReturnType<typeof useI18n>["t"]
+): FormFieldConfig[] {
+  const d = t.users;
 
+  return [
+    {
+      name: "full_name",
+      label: d.fullName,
+      type: "text",
+      dataType: "text",
+      required: true,
+    },
 
+    {
+      name: "email",
+      label: d.email,
+      type: "text",
+      dataType: "email",
+      required: true,
+    },
 
-export const userFields: FormFieldConfig[] = [
+    {
+      name: "password",
+      label: (mode) =>
+        mode === "edit"
+          ? d.newPassword
+          : d.password,
+      type: "password",
+      dataType: "password",
+      required: true,
+      hideInEdit: false,
+      hideInView: true,
+    },
 
-  {
-      name:"full_name",
-      label:"Full Name",
-      type:"text",
-      dataType:"text",
-      required:true
-  },
-  
-  {
-      name:"email",
-      label:"Email",
-      type:"text",
-      dataType:"email",
-      required:true
-  },
-  
-  {
-      name:"password",
-      label:(mode)=> 
-      mode === "edit"
-        ? "New Password"
-        : "Password",
-      type:"password",
-      dataType:"password",
-      required:true,
-      hideInEdit:false,
-      hideInView:true
-  },
-  
-  {
-      name:"department",
-      label:"Department",
-      type:"text",
-      dataType:"text",
-  },
-  
-  {
-      name:"employee_id",
-      label:"Employee ID",
-      type:"text",
-      dataType:"text",
-  },
-  
-  {
-      name:"phone",
-      label:"Phone",
-      type:"text",
-      dataType:"text",
-  },
-  
-  {
-      name:"role_id",
-      label:"Role",
-      type:"select",
-      dataType:"number",
-      options:[]
-  },
- 
-];
+    {
+      name: "department",
+      label: d.department,
+      type: "text",
+      dataType: "text",
+    },
 
+    {
+      name: "employee_id",
+      label: d.employeeId,
+      type: "text",
+      dataType: "text",
+    },
 
+    {
+      name: "phone",
+      label: d.phone,
+      type: "text",
+      dataType: "text",
+    },
 
-export function transformUserSubmit(data:any){
+    {
+      name: "role_id",
+      label: d.role,
+      type: "select",
+      dataType: "number",
+      options: [],
+    },
+  ];
+}
+
+export function transformUserSubmit(data: any) {
   return {
     ...data,
   };
 }
-
-

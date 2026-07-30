@@ -1,56 +1,70 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
 import { CrudPage } from "@/components/crud/CrudPage";
-import { userColumns, userFields, transformUserSubmit } from "@/features/users/config";
+import {
+  getUserColumns,
+  getUserFields,
+  transformUserSubmit,
+} from "@/features/users/config";
 import { useHooks } from "@/features/users/hooks";
 import { getRoles } from "@/features/users/service";
-import { FormFieldConfig } from "@/components/crud/types";
-
+import { useI18n } from "@/lib/i18n/context";
 
 export default function Page() {
+  const { t } = useI18n();
+  const d = t.users;
+
   const crud = useHooks();
-  const [ fields, setFields] = useState<FormFieldConfig[]>(userFields);
+
+  const userColumns = getUserColumns(t);
+
+  const [roleOptions, setRoleOptions] = useState<
+    {
+      value: number;
+      label: string;
+    }[]
+  >([]);
 
   useEffect(() => {
-
-    async function loadRoles(){
+    async function loadRoles() {
       try {
         const roles = await getRoles();
-        const roleOptions =
-          roles.map(
-            (role:any)=>({
-              value: role.id,
-              label:role.name
-            })
-          );
 
-        const updatedFields = userFields.map(
-          field=>{
-            if(field.name === "role_id"){
-              return {
-                ...field,
-                options: roleOptions
-              };
-            }
-            return field;
-          }
-        );
-        setFields(updatedFields);
-      }
-      catch(error){
+        const options = roles.map((role: any) => ({
+          value: role.id,
+          label: role.name,
+        }));
+
+        setRoleOptions(options);
+      } catch (error) {
         console.error("Failed loading roles", error);
       }
     }
 
     loadRoles();
+  }, []);
 
-  },[]);
+  /**
+   * Rebuild fields whenever language changes
+   */
+  const userFields = getUserFields(t);
+
+  const fields = userFields.map((field) => {
+    if (field.name === "role_id") {
+      return {
+        ...field,
+        options: roleOptions,
+      };
+    }
+
+    return field;
+  });
 
   return (
     <CrudPage
-      title="Agency Routing"
+      title={d.title}
+      subtitle={d.subtitle}
       data={crud.rules}
       columns={userColumns}
       fields={fields}

@@ -23,31 +23,31 @@ export const recentActivities: AIActivity[] = [
     id: "1",
     type: "classification",
     description: "Classified report as INFRASTRUCTURE → Local Council (Medium)",
-    timestamp: new Date(Date.now() - 5 * 60000).toISOString(),
+    timestamp: "2026-03-01T10:30:00Z",
   },
   {
     id: "2",
     type: "routing",
     description: "Routed flood report to JPBD via API_WEBHOOK",
-    timestamp: new Date(Date.now() - 12 * 60000).toISOString(),
+    timestamp:"2026-03-01T10:30:00Z",
   },
   {
     id: "3",
     type: "dispatch",
     description: "Successfully dispatched incident #a3f2 to Bomba",
-    timestamp: new Date(Date.now() - 25 * 60000).toISOString(),
+    timestamp:"2026-03-01T10:30:00Z",
   },
   {
     id: "4",
     type: "error",
     description: "Failed dispatch to MBPJ — endpoint timeout, queued for retry",
-    timestamp: new Date(Date.now() - 45 * 60000).toISOString(),
+    timestamp: "2026-03-01T10:30:00Z",
   },
   {
     id: "5",
     type: "classification",
     description: "Classified report as HEALTH → KKM (High)",
-    timestamp: new Date(Date.now() - 60 * 60000).toISOString(),
+    timestamp: "2026-03-01T10:30:00Z",
   },
 ];
 

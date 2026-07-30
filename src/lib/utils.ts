@@ -6,10 +6,29 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(date: string) {
-  return new Intl.DateTimeFormat("en-MY", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(date));
+  const d = new Date(date);
+
+  if (isNaN(d.getTime())) {
+    return "-";
+  }
+
+  const day = d.getDate();
+
+  const month = d.toLocaleString("en-US", {
+    month: "short",
+    timeZone: "Asia/Kuala_Lumpur",
+  });
+
+  const year = d.getFullYear();
+
+  let hour = d.getHours();
+  const minute = d.getMinutes().toString().padStart(2, "0");
+
+  const period = hour >= 12 ? "pm" : "am";
+
+  hour = hour % 12 || 12;
+
+  return `${day} ${month} ${year}, ${hour}:${minute} ${period}`;
 }
 
 export function urgencyColor(urgency: string) {

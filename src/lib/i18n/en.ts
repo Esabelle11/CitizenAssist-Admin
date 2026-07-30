@@ -2,13 +2,13 @@ const  en= {
     appName: "Citizen Assist AI",
     appSubtitle: "Admin Portal",
     nav: {
+      users: "Users & Permissions",
       dashboard: "Dashboard",
       agencyRouting: "Agency Routing",
       knowledgeBase: "Knowledge Base",
-      incidents: "Incidents",
       chatMonitoring: "Chat Monitoring",
+      incidents: "Incidents",
       dispatch: "Dispatch",
-      users: "Users & Permissions",
       aiConfig: "AI Configuration",
       simulator: "Routing Simulator",
     },
@@ -92,7 +92,15 @@ const  en= {
       fullName: "Full Name",
       role: "Role",
       lastLogin: "Last Login",
+      joinedDate: "Joined Date",
+      password: "password",
+      newPassword: "New Password",
+      department:"Department",
+      employeeId:"Employee ID",
+      phone: "Phone",
       roles: { Admin: "Admin", Operator: "Operator", Viewer: "Viewer" },
+
+      
     },
     aiConfig: {
       title: "AI Configuration",

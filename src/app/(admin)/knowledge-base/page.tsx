@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <CrudPage
       title="Information Base"
+      subtitle="Manage AI knowledge entries for citizen assistance"
       data={crud.rules}
       columns={informationBaseColumns}
       fields={informationBaseFields}

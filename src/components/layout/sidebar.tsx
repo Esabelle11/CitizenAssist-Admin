@@ -18,13 +18,13 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/context";
 
 const navItems = [
+  { href: "/users", icon: Users, key: "users" as const },
   { href: "/dashboard", icon: LayoutDashboard, key: "dashboard" as const },
   { href: "/agency-routing", icon: Route, key: "agencyRouting" as const },
   { href: "/knowledge-base", icon: BookOpen, key: "knowledgeBase" as const },
-  { href: "/incidents", icon: AlertTriangle, key: "incidents" as const },
   { href: "/chat-monitoring", icon: MessageSquare, key: "chatMonitoring" as const },
+  { href: "/incidents", icon: AlertTriangle, key: "incidents" as const },
   { href: "/dispatch", icon: Send, key: "dispatch" as const },
-  { href: "/users", icon: Users, key: "users" as const },
   { href: "/ai-config", icon: Bot, key: "aiConfig" as const },
   { href: "/simulator", icon: FlaskConical, key: "simulator" as const },
 ];
