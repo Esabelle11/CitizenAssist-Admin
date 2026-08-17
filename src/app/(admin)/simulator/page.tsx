@@ -143,7 +143,7 @@ export default function SimulatorPage(){
 
 
         {/* ANALYSIS */}
-        <div className="space-y-4">
+        <div className="lg:col-span-3 space-y-4">
           {  selectedResult &&
             <>
               <IntentCard analysis={ selectedResult.analysis} />
