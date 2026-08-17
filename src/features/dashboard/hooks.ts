@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { dashboardService } from "./service";
 import { DashboardData } from "@/types/dashboard";
 import { DEFAULT_DASHBOARD } from "./config";
+import { mockDashboardData } from "@/lib/mock-data";
 
+const USE_MOCK = true;
 
 export function useDashboard() {
   
@@ -14,8 +16,15 @@ export function useDashboard() {
   useEffect(() => {
     async function load() {
       try {
-        const result = await dashboardService.getDashboard();
-        setData(result);
+        if (USE_MOCK) {
+          // Simulate API loading delay
+          await new Promise((resolve) => setTimeout(resolve, 500));
+
+          setData(mockDashboardData);
+        } else {
+          const result = await dashboardService.getDashboard();
+          setData(result);
+        }
       } catch {
         setError("Failed to load dashboard.");
       } finally {

@@ -1,6 +1,5 @@
 export const dashboardService = {
 
-
   async getDashboard(){
   
     const res = await fetch( "/api/dashboard");
@@ -12,6 +11,5 @@ export const dashboardService = {
     return res.json();
   
   }
-  
   
 }

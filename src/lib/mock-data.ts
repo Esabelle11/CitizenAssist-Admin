@@ -242,3 +242,144 @@ export const aiConfig: AIConfig = {
   classification_threshold: 0.75,
   enable_gps_prompt: true,
 };
+
+
+// src/lib/mock-data.ts
+
+export const mockDashboardData = {
+  stats: {
+    activeChats: 24,
+    reportsToday: 47,
+    pendingRouting: 8,
+    criticalCases: 3,
+  },
+
+  performance: {
+    accuracy: 94.6,
+    responseTime: 1.8,
+    resolutionRate: 87.3,
+    escalationRate: 12.7,
+  },
+
+  activities: [
+    {
+      id: "activity-001",
+      type: "classification" as const,
+      description:
+        "AI classified a road damage report as Infrastructure → Road Maintenance",
+      timestamp: "2 minutes ago",
+    },
+    {
+      id: "activity-002",
+      type: "routing" as const,
+      description:
+        "Case #CA-1048 routed to Petaling Jaya City Council",
+      timestamp: "8 minutes ago",
+    },
+    {
+      id: "activity-003",
+      type: "dispatch" as const,
+      description:
+        "Incident report #CA-1045 successfully dispatched to the assigned agency",
+      timestamp: "14 minutes ago",
+    },
+    {
+      id: "activity-004",
+      type: "classification" as const,
+      description:
+        "AI classified a flood complaint as Public Safety → Flooding",
+      timestamp: "21 minutes ago",
+    },
+    {
+      id: "activity-005",
+      type: "routing" as const,
+      description:
+        "Case #CA-1042 routed to Air Selangor for water supply investigation",
+      timestamp: "32 minutes ago",
+    },
+    {
+      id: "activity-006",
+      type: "error" as const,
+      description:
+        "Failed to route case #CA-1039 due to unavailable agency endpoint",
+      timestamp: "41 minutes ago",
+    },
+    {
+      id: "activity-007",
+      type: "dispatch" as const,
+      description:
+        "Case #CA-1037 marked as successfully dispatched",
+      timestamp: "53 minutes ago",
+    },
+    {
+      id: "activity-008",
+      type: "classification" as const,
+      description:
+        "AI classified a streetlight complaint as Infrastructure → Street Lighting",
+      timestamp: "1 hour ago",
+    },
+  ],
+
+  system: [
+    {
+      label: "AI Service",
+      value: "Operational",
+      healthy: true,
+    },
+    {
+      label: "Database",
+      value: "Operational",
+      healthy: true,
+    },
+    {
+      label: "WhatsApp Gateway",
+      value: "Operational",
+      healthy: true,
+    },
+    {
+      label: "Agency Routing",
+      value: "Operational",
+      healthy: true,
+    },
+    {
+      label: "Knowledge Base",
+      value: "Operational",
+      healthy: true,
+    },
+  ],
+
+  distribution: [
+    {
+      category: "Infrastructure",
+      count: 128,
+    },
+    {
+      category: "Public Safety",
+      count: 86,
+    },
+    {
+      category: "Utilities",
+      count: 64,
+    },
+    {
+      category: "Environment",
+      count: 42,
+    },
+    {
+      category: "Transportation",
+      count: 37,
+    },
+    {
+      category: "Other",
+      count: 21,
+    },
+  ],
+
+  escalation: {
+    waiting: 8,
+    oldest: "18 minutes",
+    high: 2,
+    medium: 4,
+    low: 2,
+  },
+};
